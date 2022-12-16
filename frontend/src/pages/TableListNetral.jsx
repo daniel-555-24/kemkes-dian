@@ -188,7 +188,7 @@ export default function TwitterPage(props : Props) {
       <Divider />
       <List>
         {[
-        <Link to="/dashboard" rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'white' }}>Dashboard</Link>, 
+        <Link to="/" rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'white' }}>Dashboard</Link>, 
         <Link to="/pencarian-topik" rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'white' }}>Pencarian Topik Lain</Link>, 
         <Link to="/management-user" rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'white' }}>Management User</Link>, 
         <Link to="/management-modul" rel='noopener noreferrer' style={{ textDecoration: 'none', color: 'white' }}>Management Modul</Link>].map((text, index) => (

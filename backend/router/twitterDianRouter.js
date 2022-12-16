@@ -808,26 +808,6 @@ router.post('/get-table-neutral', (req, res) => {
     });
   }
 
-  start_date && end_date
-    ? options.query.bool.filter.push({
-        range: {
-          crawlingdate: {
-            gte: start_date,
-            lte: end_date,
-            format: 'strict_date_optional_time',
-          },
-        },
-      })
-    : options.query.bool.filter.push({
-        range: {
-          crawlingdate: {
-            gte: date + 'T00:00:00.000Z',
-            lte: date + 'T23:59:59.999Z',
-            format: 'strict_date_optional_time',
-          },
-        },
-      });
-
   let query = {
     index: 'twitter_dian',
     size: 1000,
@@ -849,7 +829,9 @@ router.post('/get-table-positive', (req, res) => {
   let today = new Date();
   let date = today.toISOString().split('T')[0];
   let twoweek = new Date(Date.now() - 12096e5);
+  let onemonth = new Date(Date.now() - 2073600000);
   let twoweeksbefore = twoweek.toISOString().split('T')[0];
+  let onemonthbefore = onemonth.toISOString().split('T')[0];
   let { region_code, issue, start_date, end_date } = req.body;
   let options = {
     _source: {
@@ -899,26 +881,6 @@ router.post('/get-table-positive', (req, res) => {
       },
     });
   }
-
-  start_date && end_date
-    ? options.query.bool.filter.push({
-        range: {
-          crawlingdate: {
-            gte: start_date,
-            lte: end_date,
-            format: 'strict_date_optional_time',
-          },
-        },
-      })
-    : options.query.bool.filter.push({
-        range: {
-          crawlingdate: {
-            gte: date + 'T00:00:00.000Z',
-            lte: date + 'T23:59:59.999Z',
-            format: 'strict_date_optional_time',
-          },
-        },
-      });
 
   let query = {
     index: 'twitter_dian',
@@ -992,26 +954,6 @@ router.post('/get-table-negative', (req, res) => {
       },
     });
   }
-
-  start_date && end_date
-    ? options.query.bool.filter.push({
-        range: {
-          crawlingdate: {
-            gte: start_date,
-            lte: end_date,
-            format: 'strict_date_optional_time',
-          },
-        },
-      })
-    : options.query.bool.filter.push({
-        range: {
-          crawlingdate: {
-            gte: date + 'T00:00:00.000Z',
-            lte: date + 'T23:59:59.999Z',
-            format: 'strict_date_optional_time',
-          },
-        },
-      });
 
   let query = {
     index: 'twitter_dian',
