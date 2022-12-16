@@ -1035,9 +1035,9 @@ export default function TwitterPage(props : Props) {
   };
   const backHandler = (e) => {
     Swal.fire({
-      icon: 'error',
-      title: 'Error not configuration yet',
-      text: 'This feature still in progress',
+      icon: 'success',
+      title: 'Success',
+      text: 'Already Complete',
     });
   };
 
