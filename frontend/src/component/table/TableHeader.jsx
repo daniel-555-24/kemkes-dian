@@ -7,10 +7,8 @@ export default function TableHeader() {
   return (
         <TableHead>
           <TableRow>
-            <TableCell style={{ fontWeight : 'bold'}}>Username</TableCell>
-            <TableCell style={{ fontWeight : 'bold'}} align="right">Tweet</TableCell>
-            <TableCell style={{ fontWeight : 'bold'}} align="right">Location</TableCell>
-            <TableCell style={{ fontWeight : 'bold'}} align="right">Attraction</TableCell>
+            <TableCell style={{ fontWeight : 'bold'}}>User</TableCell>
+            <TableCell style={{ fontWeight : 'bold'}}>Tweet</TableCell>
           </TableRow>
         </TableHead>
   );

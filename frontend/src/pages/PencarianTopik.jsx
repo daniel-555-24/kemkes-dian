@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
+import TextareaAutosize from '@mui/base/TextareaAutosize';
 import { makeStyles } from '@material-ui/core/styles';
 import DateMomentsUtils from '@date-io/moment';
 import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
@@ -49,6 +50,7 @@ import CloseIcon from '@material-ui/icons/Cancel';
 import ReactLoading from 'react-loading';
 import Switch from '@mui/material/Switch';
 import Swal from 'sweetalert2';
+import TextField from '@mui/material/TextField';
 import "@fontsource/roboto";
 import '../App.css';
 
@@ -73,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     height: 70,
   },
   logoChart: {
-    height: 80,
+    height: 60,
   },
   rootPositif: {
     border: '4px solid #D2DC2E',
@@ -82,10 +84,10 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '20px',
   },
   rootNegatif: {
-    border: '4px solid #BE0712',
+    height:'600px',
+    border: '2px solid',
     marginRight: 'auto',
     marginLeft: 'auto',
-    borderRadius: '20px',
   },
   rootNetral: {
     border: '4px solid #E0E0E0',
@@ -160,6 +162,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const drawerWidth = 240;
+const hr = {
+  display: 'block',
+  height: '1px',
+  border: '0',
+  borderTop: '5px solid #000',
+  margin: '1em 0',
+  padding: '0'
+};
 
 interface Props {
   /**
@@ -1023,6 +1033,13 @@ export default function TwitterPage(props : Props) {
       text: 'You are loged out',
     });
   };
+  const backHandler = (e) => {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error not configuration yet',
+      text: 'This feature still in progress',
+    });
+  };
 
   {
     /* CONDITIONAL */
@@ -1123,439 +1140,49 @@ export default function TwitterPage(props : Props) {
         sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}
         style={{padding:0}}
       >
-      <div style={{backgroundColor:'#ECECEC'}}>
-
-      {/* APP : MAIN-CONTENT */}
-
-      <Grid container justify='center' style={{ marginTop: 40, paddingLeft: 48, paddingRight: 48 }} spacing={3}>
-        <Grid item sm={12} style={{marginTop:'100px'}}>
-          <Card className={classes.rootCard}>
-          <Grid  container  style={{ marginTop: 10, justifyContent:'center' }}  spacing={12} >
-        <b item sm={2} style={{fontSize:'22px', paddingTop:14 }}>
-         Pilih Topik
-         <br/>
-         <br/>
-         <p style={{marginTop:'20px'}}>Pilih Tanggal</p>
-        </b>
-        <Grid item sm={7} style={{ padding: 10 }}>
-          <Form.Select
-            size='md'
-            onChange={handleChange}
-            defaultValue={valueIssue}
-            style={{width:'20%'}}
-          >
-            <option value=''>Semua topik</option>
-            {issueSummary.map((data) => {
-              return <option value={data}>{data}</option>;
-            })}
-          </Form.Select>
-          <br/><br/>
-          {/* Start-Date */}
-          <MuiPickersUtilsProvider utils={DateMomentsUtils}>
-            <DatePicker
-              autoOk
-              ampm={false}
-              disableFuture
-              startDate={startDate}
-              value={startDate}
-              onChange={(startDate) => {
-                setStartDate(startDate);
-              }}
-              onAccept={(startDate) => {
-                setStartDate(startDate);
-              }}
-              // maxDate= {new Date(Date.now() + 12096e5)}
-              maxDate={new Date()}
-              minDate={new Date() - 12096e5}
-              label='Start Date'
-            />
-          </MuiPickersUtilsProvider>
-
-        {/* End-Date */}
-          <MuiPickersUtilsProvider utils={DateMomentsUtils}>
-            {/* <DateTimePicker value={startDate} onChange={setStartDate} /> */}
-            <DatePicker
-              autoOk
-              ampm={false}
-              disableFuture
-              startDate={endDate}
-              value={endDate}
-              onChange={(endDate) => {
-                setEndDate(endDate);
-                localStorage.setItem('endDate', endDate);
-              }}
-              onAccept={(endDate) => {
-                setEndDate(endDate);
-                localStorage.setItem('endDate', endDate);
-              }}
-              minDate={startDate}
-              label='End Date'
-            />
-          </MuiPickersUtilsProvider>
-
-          <Button
-            onClick={(e) => {
-              setStartDate();
-              setEndDate();
-            }}
-            variant='text'
-          >
-            X
-          </Button>
-
-          <Button
-            onClick={(e) => {
-              handleChangeDaerahmap(valueFropdownDaerah);
-            }}
-            style={{background:'#007871'}}
-            variant='contained'
-          >
-            Set Filter
-          </Button>
-        </Grid>
-        <Grid item sm={2} style={{ padding: 10 , textAlign:'center', marginTop:'25px'}}>
-              <img src={chart} style={{marginLeft:'60%'}} alt='logo' className={classes.logoChart} />
-              <br />
-        </Grid>
-        <Grid item sm={1.5} style={{ padding: 10 , textAlign:'center', marginTop:'25px'}}>
-            <b style={{fontSize:'40px'}}>{
-                ((countSentiment[0] ? countSentiment[0] :0) +
-                  (countSentiment[1] ? countSentiment[1]: 0) +
-                  (countSentiment[2] ? countSentiment[2] : 0))
-              }</b>
-              <br />
-              Total Tweet
-        </Grid>
-        
-      </Grid>
-          </Card>
-        </Grid>
-
-
-      </Grid>
-
-      {/* Line 1 */}
-
-      <Grid container justify='center' spacing={2} style={{ marginTop: 50, paddingLeft: 48, paddingRight: 48 }} >
-        <Grid item sm={6}>
-          <Card className={classes.rootCard} style={{ height: 425 }}>
-          <Grid container style={{justifyContent:'center'}}>
-              <Grid item xs={6} style={{maxWidth:'80%'}}>
-                <div style={{ height: '330px',paddingBottom: 5,marginTop: '20px'}}>
-                  <svg width='1000px' height='100%'>
-                    <g className='geojson-layer'>{renderMap()}</g>
-                  </svg>
-                </div>
-                <Row style={{ marginLeft: '20px'}}>
-                  <Col xs={3}>
-                    <i
-                      className={classes.legendBox}
-                      style={{
-                        background:'#00B9AE',
-                      }}
-                    />
-                    <span style={{ marginLeft: '25px', fontSize: '16px' }}>
-                      Ramai : &gt; 100
-                    </span>
-                  </Col>
-                  <Col xs={3} >
-                    <i
-                      className={classes.legendBox}
-                      style={{
-                        background:'#80DCD9',
-                      }}
-                    />
-                    <span style={{ marginLeft: '20px', fontSize: '16px' }}>
-                      Cukup :  50 - 99
-                    </span>
-                    <br />
-                  </Col>
-                  <Col xs={3}>
-                    <i
-                      className={classes.legendBox}
-                      style={{
-                        background: '#d4f5f9',
-                      }}
-                    />
-                    <span style={{ marginLeft: '25px', fontSize: '16px' }}>
-                      sepi : &lt; 50
-                    </span>
-                    <br />
-                  </Col>
-                  <Col xs={3}>
-                    <i
-                      className={classes.legendBox}
-                      style={{
-                        background: '#D3D2DC',
-                        marginLeft: '-15px',
-                      }}
-                    />
-                    <span style={{ marginLeft: '5px', fontSize: '16px' }}>
-                      undefined :{' '}
-                      {listValueOfMap.length ? listValueOfMap[0].doc_count : 0}{' '}
-                    </span>
-                  </Col>
-                </Row>
-              </Grid>
-            </Grid>
-          </Card>
-          <div style={{fontFamily:'Roboto'}}>
-            <br />
-            <h3>TWEET ACTIVITY</h3>
-            Jumlah pengguna twitter yang mempublish tweet terkait topik yang dipilih berdasarkan wilayah di Indonesia.
-          </div>
-        </Grid>
-        
-        <Grid item sm={6}>
-            <Card className={classes.rootCard} style={{ height: 425 }}>
-            <Grid style={{ marginTop: '50px' }}>
-                {renderWord()}
-              </Grid>
-            </Card>
-            <div>
-            <br />
-            <h3>WORD CLOUD</h3>
-            Tren kata terkait topik, klik pada kata atau bar untuk melihat daftar tweet.
-          </div>
-        </Grid>
-      </Grid>
-
-      {/* Line 2 */}
-
-      <Grid container justify='center' spacing={3} style={{ marginTop: 50, paddingLeft: 48, paddingRight: 48 }} >
-      <Grid item sm={6}>
-            <Card className={classes.rootCard} style={{ height: 425 }}>
-              {
-                <BarSummary
-                  issue={issueSummary}
-                  negatif={negatifSummary}
-                  positif={positifSummary}
-                  netral={netralSummary}
-                />
-              }
-            </Card>
-            <div>
-            <br />
-            <h3>Summary keyword</h3>
-            Persentase sentimen positif, negatif dan netral pada keyword terkait topik
-          </div>
-        </Grid>
-        <Grid item sm={6}>
-          <Card className={classes.rootCard} style={{ height: 425, textAlign:'-webkit-center' }}>
-            {/* <h4  style={{ marginLeft : '40px', marginTop : '20px', fontWeight : 'bold'}}>Sentimen</h4> */}
-            <PieSentimen
-              positif={countSentiment[0] ? countSentiment[0]: 0}
-              negatif={countSentiment[1] ? countSentiment[1]: 0}
-              netral={countSentiment[2] ? countSentiment[2] : 0}
-            />
-            <Row>
-              <Col style={{ textAlign: 'center' }}>
-                <div>
-                  <i
-                    className={classes.legendBox}
-                    style={{
-                      background: '#00B9AE',
-                    }}
-                  />
-                  <span
-                    style={{
-                      marginLeft: '25px',
-                      fontSize: '17px',
-                      color: 'black',
-                    }}
-                  > 
-                    Positive
-                  </span>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                  <i
-                    className={classes.legendBox}
-                    style={{
-                      background: '#D2E634',
-                    }}
-                  />
-                  <span
-                    style={{
-                      marginLeft: '25px',
-                      fontSize: '17px',
-                      color: 'black',
-                    }}
-                  >
-                    Negative
-                  </span>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                  <i
-                    className={classes.legendBox}
-                    style={{
-                      background: '#FDFED6',
-                    }}
-                  />
-                  <span
-                    style={{
-                      marginLeft: '25px',
-                      fontSize: '17px',
-                      color: 'black',
-                    }}
-                  >
-                    Neutral
-                  </span>
-                </div>
-                <div>
-                  <i
-                    className={classes.legendBox}
-                    style={{ background: '#ffffff' }}
-                  />
-                  <span
-                    style={{
-                      marginLeft: '25px',
-                      fontSize: '22px',
-                      color: 'black',
-                    }}
-                  >
-                    {(
-                      (countSentiment[0] / (countSentiment[0] + countSentiment[1] + countSentiment[2])) * 100).toFixed(1)} %
-                  </span>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                  <i
-                    className={classes.legendBox}
-                    style={{ background: '#ffffff' }}
-                  />
-                  <span
-                    style={{
-                      marginLeft: '25px',
-                      fontSize: '22px',
-                      color: 'black',
-                    }}
-                  >
-                    {(
-                      (countSentiment[1] / (countSentiment[0] + countSentiment[1] + countSentiment[2])) * 100).toFixed(1)} %
-                  </span>
-                  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-                  <i
-                    className={classes.legendBox}
-                    style={{ background: '#ffffff' }}
-                  />
-                  <span
-                    style={{
-                      marginLeft: '25px',
-                      fontSize: '22px',
-                      color: 'black',
-                    }}
-                  >
-                     {(
-                      (countSentiment[2] / (countSentiment[0] + countSentiment[1] + countSentiment[2])) * 100).toFixed(1)} %
-                  </span>
-                </div>
-              </Col>
-            </Row>
-          </Card>
-          <div>
-            <br />
-            <h3>Persentase Sentimen</h3>
-            Persentase sentimen positif, negatif dan netral masyarakat terkait topik.
-          </div>
-        </Grid>
-      </Grid>
-
-      {/* Line 3  */}
+      <div>
 
       <Grid
         container
         justify='center'
         spacing={5}
-        style={{ marginTop: 50, paddingLeft: 48, paddingRight: 48 }}
+        style={{ marginTop: 120, paddingLeft: 48, paddingRight: 48 }}
       >
-        <Grid
-          item
-          md={4}
-          style={{
-            justifyContent: 'space-between',
-            alignContent: 'space-around',
-          }}
-        >
-          <Card className={classes.rootPositif}>
-            <p
-              style={{
-                marginLeft: 15,
-                marginTop: 10,
-                fontSize: 16,
-                fontWeight: 'bold',
-              }}
-            >
-              {' '}
-              Sentimen Positif
-            </p>
-            <Paper className={classes.paperTable}>
-              <TableContainer component={Paper}>
-                <Table sx={{ width: '100%' }} aria-label='customized table'>
-                  <TableHeader />
-                  {renderDataTablePositif()}
-                </Table>
-              </TableContainer>
-            </Paper>
-          </Card>
-        </Grid>
 
         <Grid
           item
-          md={4}
-          style={{
-            justifyContent: 'space-between',
-            alignContent: 'space-around',
-          }}
+          md={12}
         >
-          <Card className={classes.rootNetral}>
-            <p
-              style={{
-                marginLeft: 15,
-                marginTop: 10,
-                fontSize: 16,
-                fontWeight: 'bold',
-              }}
-            >
-              {' '}
-              Sentimen Netral
-            </p>
-            <Paper className={classes.paperTable}>
-              <TableContainer component={Paper}>
-                <Table sx={{ width: '100%' }} aria-label='customized table'>
-                  <TableHeader />
-                  {renderDataTableNetral()}
-                </Table>
-              </TableContainer>
-            </Paper>
-          </Card>
+         <h3>Form Permintaan Topik</h3>
+         <hr style={{opacity:'1'}}/>
+         <TextField fullWidth label="email" id="email" />
+         <br /><br />
+         <TextField fullWidth label="topik" id="topik" />
+         <br /><br />
+         <TextareaAutosize
+            aria-label="minimum height"
+            minRows={4}
+            placeholder="Keyword"
+            style={{ width: '100%' }}
+          />
+         <br /><br />
+         <TextareaAutosize
+            aria-label="minimum height"
+            minRows={4}
+            placeholder="Tujuan"
+            style={{ width: '100%' }}
+          />
+         <br /><br />
         </Grid>
-
-        <Grid
-          item
-          md={4}
-          style={{
-            justifyContent: 'space-between',
-            alignContent: 'space-around',
-          }}
-        >
-          <Card className={classes.rootNegatif}>
-            <p
-              style={{
-                marginLeft: 15,
-                marginTop: 10,
-                fontSize: 16,
-                fontWeight: 'bold',
-              }}
-            >
-              {' '}
-              Sentimen Negatif
-            </p>
-            <Paper className={classes.paperTable}>
-              <TableContainer component={Paper}>
-                <Table sx={{ width: '100%' }} aria-label='customized table'>
-                  <TableHeader />
-                  {renderDataTableNegatif()}
-                </Table>
-              </TableContainer>
-            </Paper>
-          </Card>
-        </Grid>
+        <Grid item sm={1} style={{marginRight:'auto'}}>
+              <Button
+                onClick={backHandler}
+                variant='contained'
+                style={{backgroundColor:'#00B9AE'}}
+              >
+                Ajukan
+              </Button>
+            </Grid>
       </Grid>
     </div>
       </Box>

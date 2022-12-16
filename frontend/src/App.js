@@ -3,6 +3,12 @@ import { useState } from 'react';
 import PrivateRoute from './component/privateRoute/PrivateRoute';
 import TwitterPage from './pages/TwitterPage';
 import NewsPage from './pages/NewsPage';
+import ListNegatif from './pages/TableListNegatif';
+import ListPositif from './pages/TableListPositif';
+import ListNetral from './pages/TableListNetral';
+import PencarianTopik from './pages/PencarianTopik';
+import ManagementUser from './pages/ManagementUser';
+import ManagementModul from './pages/ManagementModul';
 import UserProfilePage from './pages/UserProfile';
 import UserProfilePagePremium from './pages/UserProfilePremium';
 import TwitterPremiumPage from './pages/TwitterPremiumPage';
@@ -29,6 +35,42 @@ function App() {
             exact
             path='/news'
             component={NewsPage}
+            auth={isAutheticated}
+          />
+          <PrivateRoute
+            exact
+            path='/list-negatif'
+            component={ListNegatif}
+            auth={isAutheticated}
+          />
+          <PrivateRoute
+            exact
+            path='/list-positif'
+            component={ListPositif}
+            auth={isAutheticated}
+          />
+          <PrivateRoute
+            exact
+            path='/list-netral'
+            component={ListNetral}
+            auth={isAutheticated}
+          />
+          <PrivateRoute
+            exact
+            path='/pencarian-topik'
+            component={PencarianTopik}
+            auth={isAutheticated}
+          />
+          <PrivateRoute
+            exact
+            path='/management-user'
+            component={ManagementUser}
+            auth={isAutheticated}
+          />
+          <PrivateRoute
+            exact
+            path='/management-modul'
+            component={ManagementModul}
             auth={isAutheticated}
           />
           <PrivateRoute
